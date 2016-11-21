@@ -5,9 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
+ * @author Supraj
  * 
- * This is the default application configuration class that will load all the
- * spring related configurations and inject all the dependencies.
+ *         Default application configuration class that will load all the spring
+ *         related configurations and inject all the dependencies.
  *
  */
 @Configuration
