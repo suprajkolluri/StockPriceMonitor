@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.logicmonitor.spm.dao.CompanyDAO;
 import com.logicmonitor.spm.dto.CompanyDTO;
+import com.logicmonitor.spm.exception.InvalidJsonException;
 import com.logicmonitor.spm.exception.InvalidSymbolException;
 import com.logicmonitor.spm.exception.StorageException;
 import com.logicmonitor.spm.service.CompanyDetailsService;
@@ -21,7 +22,7 @@ public class CompanyServiceImpl implements CompanyService {
 	CompanyDAO dao;
 
 	@Override
-	public void addCompany(String companySymbol) throws InvalidSymbolException, StorageException {
+	public void addCompany(String companySymbol) throws InvalidSymbolException, StorageException, InvalidJsonException {
 		String name = detailsService.getCompanyName(companySymbol);
 
 		CompanyDTO company = new CompanyDTO(companySymbol, name);

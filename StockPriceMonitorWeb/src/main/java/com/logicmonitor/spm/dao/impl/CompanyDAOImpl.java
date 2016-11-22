@@ -17,6 +17,7 @@ import com.logicmonitor.spm.exception.StorageException;
 public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDAO {
 
 	@Override
+	@Transactional
 	public void addCompany(CompanyDTO company) throws StorageException {
 
 		try {

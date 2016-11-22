@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.logicmonitor.spm.dto.CompanyDTO;
+import com.logicmonitor.spm.exception.InvalidJsonException;
 import com.logicmonitor.spm.exception.InvalidSymbolException;
 import com.logicmonitor.spm.exception.StorageException;
 import com.logicmonitor.spm.service.CompanyService;
@@ -45,14 +46,12 @@ public class CompanyRESTController {
 		try {
 			companyService.addCompany(companySymbol);
 		} catch (InvalidSymbolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (StorageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (StorageException | InvalidJsonException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<>(companySymbol, HttpStatus.OK);
+		return new ResponseEntity<>("Success", HttpStatus.CREATED);
 
 	}
 
@@ -70,10 +69,9 @@ public class CompanyRESTController {
 		try {
 			companyService.deleteCompany(companySymbol);
 		} catch (StorageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(companySymbol, HttpStatus.OK);
+		return new ResponseEntity<>("Success", HttpStatus.OK);
 
 	}
 
@@ -88,8 +86,7 @@ public class CompanyRESTController {
 		try {
 			companyList = companyService.getCompanies();
 		} catch (StorageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(companyList, HttpStatus.OK);
 
@@ -107,8 +104,7 @@ public class CompanyRESTController {
 		try {
 			company = companyService.getCompanyInfo(companySymbol);
 		} catch (StorageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(company, HttpStatus.OK);
 

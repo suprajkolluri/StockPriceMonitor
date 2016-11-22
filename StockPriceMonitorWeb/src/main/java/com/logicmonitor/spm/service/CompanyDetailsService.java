@@ -1,5 +1,6 @@
 package com.logicmonitor.spm.service;
 
+import com.logicmonitor.spm.exception.InvalidJsonException;
 import com.logicmonitor.spm.exception.InvalidSymbolException;
 
 /**
@@ -18,6 +19,7 @@ public interface CompanyDetailsService {
 	 * @return - The name of the company
 	 * @throws InvalidSymbolException
 	 *             If the symbol is not registered with any stock
+	 * @throws InvalidJsonException
 	 */
-	String getCompanyName(String companySymbol) throws InvalidSymbolException;
+	String getCompanyName(String companySymbol) throws InvalidSymbolException, InvalidJsonException;
 }
