@@ -1,5 +1,7 @@
 package com.logicmonitor.spm.rest.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.logicmonitor.spm.dto.CompanyDTO;
 import com.logicmonitor.spm.exception.InvalidSymbolException;
-import com.logicmonitor.spm.validator.CompanySymbolValidator;
+import com.logicmonitor.spm.exception.StorageException;
+import com.logicmonitor.spm.service.CompanyService;
 
 /**
  * 
@@ -21,11 +25,11 @@ import com.logicmonitor.spm.validator.CompanySymbolValidator;
  *         Rest Controller to Add, Delete and Read monitored company information
  */
 @RestController
-@RequestMapping("/rest/company")
+@RequestMapping("/rest/companies")
 public class CompanyRESTController {
 
 	@Autowired
-	CompanySymbolValidator symbolValidator;
+	CompanyService companyService;
 
 	/**
 	 * Add's a company to the list of companies that are monitored in the
@@ -35,15 +39,19 @@ public class CompanyRESTController {
 	 *            - The stock symbol of the company. Example - Microsoft - MSFT
 	 * @return
 	 */
-	@PostMapping(value = "/{company-symbol}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/{company-symbol}")
 	public ResponseEntity<String> addCompany(@PathVariable("company-symbol") String companySymbol) {
-		// TODO
+
 		try {
-			symbolValidator.validateSymbol(companySymbol);
+			companyService.addCompany(companySymbol);
 		} catch (InvalidSymbolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (StorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return new ResponseEntity<>(companySymbol, HttpStatus.OK);
 
 	}
@@ -57,49 +65,52 @@ public class CompanyRESTController {
 	 *            - The stock symbol of the company. Example - Microsoft - MSFT
 	 * @return
 	 */
-	@DeleteMapping(value = "/{company-symbol}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/{company-symbol}")
 	public ResponseEntity<String> deleteCompany(@PathVariable("company-symbol") String companySymbol) {
-		// TODO
+		try {
+			companyService.deleteCompany(companySymbol);
+		} catch (StorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<>(companySymbol, HttpStatus.OK);
 
 	}
 
 	/**
-	 * Lists the names of all companies that are monitored with their last
-	 * updated stock price
+	 * Lists the names of all companies that are monitored
 	 * 
 	 * @return
 	 */
-	@GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> listAllCompanies() {
-		// TODO
-		return new ResponseEntity<>("alld", HttpStatus.OK);
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<CompanyDTO>> listAllCompanies() {
+		List<CompanyDTO> companyList = null;
+		try {
+			companyList = companyService.getCompanies();
+		} catch (StorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(companyList, HttpStatus.OK);
 
 	}
 
 	/**
-	 * Returns the historical information of a company
-	 * 
-	 * @param companySymbol
-	 * @return
-	 */
-	@GetMapping(value = "/{company-symbol}/history", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getCompanyHistory(@PathVariable("company-symbol") String companySymbol) {
-		// TODO
-		return new ResponseEntity<>(companySymbol, HttpStatus.OK);
-
-	}
-
-	/**
-	 * Returns the last updated stock price of a company
+	 * Returns the company information
 	 * 
 	 * @param companySymbol
 	 * @return
 	 */
 	@GetMapping(value = "/{company-symbol}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getCompanyInfo(@PathVariable("company-symbol") String companySymbol) {
-		// TODO
-		return new ResponseEntity<>(companySymbol, HttpStatus.OK);
+	public ResponseEntity<CompanyDTO> getCompanyInfo(@PathVariable("company-symbol") String companySymbol) {
+		CompanyDTO company = null;
+		try {
+			company = companyService.getCompanyInfo(companySymbol);
+		} catch (StorageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(company, HttpStatus.OK);
 
 	}
 

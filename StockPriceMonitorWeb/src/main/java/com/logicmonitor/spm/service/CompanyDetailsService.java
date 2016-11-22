@@ -1,4 +1,4 @@
-package com.logicmonitor.spm.validator;
+package com.logicmonitor.spm.service;
 
 import com.logicmonitor.spm.exception.InvalidSymbolException;
 
@@ -6,18 +6,18 @@ import com.logicmonitor.spm.exception.InvalidSymbolException;
  * 
  * @author Supraj
  *
- *         Validator to check if a symbol is registered with a company or not
+ *         Service which fetches company details for a symbol
  */
-public interface CompanySymbolValidator {
+public interface CompanyDetailsService {
 
 	/**
-	 * Validates if a particular symbol is registered with a company or not
+	 * Gets the complete company name for a symbol
 	 * 
 	 * @param companySymbol
 	 *            - The stock symbol of the company. Example - Microsoft - MSFT
+	 * @return - The name of the company
 	 * @throws InvalidSymbolException
 	 *             If the symbol is not registered with any stock
-	 * 
 	 */
-	void validateSymbol(String companySymbol) throws InvalidSymbolException;
+	String getCompanyName(String companySymbol) throws InvalidSymbolException;
 }

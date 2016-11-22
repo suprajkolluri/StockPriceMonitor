@@ -2,6 +2,7 @@ package com.logicmonitor.spm.spring.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -11,9 +12,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *         related configurations and inject all the dependencies.
  *
  */
+@ComponentScan({ "com.logicmonitor.spm.*" })
 @Configuration
 @EnableWebMvc
-@ComponentScan({ "com.logicmonitor.spm.*" })
+@Import({ DBConfig.class })
 public class ApplicationConfig {
 
 }
