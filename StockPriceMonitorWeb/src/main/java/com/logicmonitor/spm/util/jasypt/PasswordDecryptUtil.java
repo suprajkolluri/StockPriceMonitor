@@ -21,7 +21,7 @@ public class PasswordDecryptUtil {
 	 */
 
 	/**
-	 * Decypt a given password using jasypt
+	 * Decrypt a given password using jasypt
 	 * 
 	 * @param encryptedText
 	 *            The password that is encrypted
