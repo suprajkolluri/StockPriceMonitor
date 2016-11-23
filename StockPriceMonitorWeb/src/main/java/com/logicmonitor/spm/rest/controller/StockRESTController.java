@@ -17,6 +17,12 @@ import com.logicmonitor.spm.model.CompanyInfo;
 import com.logicmonitor.spm.model.StockHistory;
 import com.logicmonitor.spm.service.StockDetailsService;
 
+/**
+ * REST Controller to provide stock information of companies
+ * 
+ * @author Supraj
+ *
+ */
 @RestController
 @RequestMapping("/rest/stocks")
 public class StockRESTController {
@@ -28,7 +34,11 @@ public class StockRESTController {
 	 * Lists the names of all companies that are monitored with their last
 	 * updated stock price
 	 * 
-	 * @return
+	 * @return - List of {@link CompanyInfo} objects which contains the company
+	 *         name, symbol and last updated stock price
+	 * 
+	 *         Internal server error if there was an exception while retrieving
+	 *         the data
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CompanyInfo>> listAllCompanies() {
@@ -47,7 +57,13 @@ public class StockRESTController {
 	 * Returns the historical information of a company
 	 * 
 	 * @param companySymbol
-	 * @return
+	 *            - The stock symbol of the company. Example - Microsoft - MSFT
+	 * @return A {@link StockHistory} object which contains the company symbol
+	 *         and List of {@link StockDetailsDTO} objects which contains the
+	 *         companies stock prices that are updated periodically
+	 * 
+	 *         Internal server error if there was an exception while retrieving
+	 *         the data
 	 */
 	@GetMapping(value = "/{company-symbol}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<StockHistory> getCompanyHistory(@PathVariable("company-symbol") String companySymbol) {

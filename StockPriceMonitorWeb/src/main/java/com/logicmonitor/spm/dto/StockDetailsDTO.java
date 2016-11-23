@@ -16,22 +16,37 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Entity class to the hold the stock_history table information
+ * 
+ * @author Supraj
+ *
+ */
 @Entity
 @Table(name = "Stock_History")
 @IdClass(StockDetailsPK.class)
 @JsonIgnoreProperties("company")
 public class StockDetailsDTO {
 
+	/**
+	 * Foreign key reference to the symbol column in the {@link CompanyDTO}
+	 */
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "symbol", referencedColumnName = "symbol")
 	private CompanyDTO company;
 
+	/**
+	 * The time the entry was added to the database
+	 */
 	@Id
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "yyyy-MM-dd mm:ss")
 	private Date time;
 
+	/**
+	 * The stock price of a company
+	 */
 	@Column(name = "stock_price", nullable = false)
 	private Double stockPrice;
 

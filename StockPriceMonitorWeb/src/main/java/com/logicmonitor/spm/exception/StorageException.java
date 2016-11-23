@@ -1,5 +1,12 @@
 package com.logicmonitor.spm.exception;
 
+/**
+ * Exception to indicate if something went wrong while interacting with the
+ * database
+ * 
+ * @author Supraj
+ *
+ */
 public class StorageException extends Exception {
 
 	private static final long serialVersionUID = -1345430472318878681L;

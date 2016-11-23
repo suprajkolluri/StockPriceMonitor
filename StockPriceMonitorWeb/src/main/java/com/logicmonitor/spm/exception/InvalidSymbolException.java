@@ -1,12 +1,10 @@
 package com.logicmonitor.spm.exception;
 
 /**
+ * Exception to indicate that a symbol is not registered with any stock
  * 
  * @author Supraj
  * 
- *         Exception to indicate if a symbol that is not registered with any
- *         stock is being used
- *
  */
 public class InvalidSymbolException extends Exception {
 

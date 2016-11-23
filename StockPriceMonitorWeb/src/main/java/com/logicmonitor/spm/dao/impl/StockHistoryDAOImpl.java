@@ -19,6 +19,12 @@ import com.logicmonitor.spm.dto.StockDetailsDTO;
 import com.logicmonitor.spm.exception.StorageException;
 import com.logicmonitor.spm.model.CompanyInfo;
 
+/**
+ * DAO implementation to retrieve the stock information from the database
+ * 
+ * @author Supraj
+ *
+ */
 @Repository
 @PropertySource("classpath:stock-info-queries.properties")
 public class StockHistoryDAOImpl extends BaseDAOImpl<CompanyDTO> implements StockHistoryDAO {
@@ -26,6 +32,9 @@ public class StockHistoryDAOImpl extends BaseDAOImpl<CompanyDTO> implements Stoc
 	@Autowired
 	Environment env;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	@Transactional
@@ -43,6 +52,9 @@ public class StockHistoryDAOImpl extends BaseDAOImpl<CompanyDTO> implements Stoc
 		return companyList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional

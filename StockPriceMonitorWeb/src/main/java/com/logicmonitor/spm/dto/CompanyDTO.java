@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
+ * Entity class to hold the Company table information
  * 
  * @author Supraj
  * 
@@ -20,12 +21,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "Company")
 public class CompanyDTO {
 
+	/**
+	 * The symbol of the company
+	 */
 	@Id
 	private String symbol;
 
+	/**
+	 * The name of the company
+	 */
 	@Column(nullable = false)
 	private String name;
 
+	/**
+	 * The date the company is added to the database
+	 */
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "yyyy-MM-dd mm:ss")

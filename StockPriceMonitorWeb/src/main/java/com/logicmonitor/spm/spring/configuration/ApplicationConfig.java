@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
+ * Default application configuration class that will load all the spring related
+ * configurations and inject all the dependencies.
+ * 
  * @author Supraj
  * 
- *         Default application configuration class that will load all the spring
- *         related configurations and inject all the dependencies.
- *
  */
 @ComponentScan({ "com.logicmonitor.spm.*" })
 @Configuration

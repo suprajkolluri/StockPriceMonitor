@@ -20,10 +20,10 @@ import com.logicmonitor.spm.exception.StorageException;
 import com.logicmonitor.spm.service.CompanyService;
 
 /**
+ * Rest Controller to Add, Delete and Read monitored company information
  * 
  * @author Supraj
  * 
- *         Rest Controller to Add, Delete and Read monitored company information
  */
 @RestController
 @RequestMapping("/rest/companies")
@@ -38,7 +38,14 @@ public class CompanyRESTController {
 	 * 
 	 * @param companySymbol
 	 *            - The stock symbol of the company. Example - Microsoft - MSFT
-	 * @return
+	 * @return - A success message if the company was added successfully
+	 * 
+	 *         An exception message with http status of 400, if the given
+	 *         company symbol is invalid
+	 * 
+	 *         An exception message with http status of 500, if there was any
+	 *         exception while validating the symbol or persisting the company
+	 *         information
 	 */
 	@PostMapping(value = "/{company-symbol}")
 	public ResponseEntity<String> addCompany(@PathVariable("company-symbol") String companySymbol) {
@@ -51,7 +58,7 @@ public class CompanyRESTController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<>("Success", HttpStatus.CREATED);
+		return new ResponseEntity<>("Added the company:" + companySymbol + "successfully", HttpStatus.CREATED);
 
 	}
 
@@ -62,7 +69,10 @@ public class CompanyRESTController {
 	 * 
 	 * @param companySymbol
 	 *            - The stock symbol of the company. Example - Microsoft - MSFT
-	 * @return
+	 * @return - A success message if the company was deleted successfully
+	 * 
+	 *         An exception message with http status of 500, if there was any
+	 *         exception while deleting the company information
 	 */
 	@DeleteMapping(value = "/{company-symbol}")
 	public ResponseEntity<String> deleteCompany(@PathVariable("company-symbol") String companySymbol) {
@@ -71,14 +81,18 @@ public class CompanyRESTController {
 		} catch (StorageException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>("Success", HttpStatus.OK);
+		return new ResponseEntity<>("Deleted the company:" + companySymbol + "successfully", HttpStatus.OK);
 
 	}
 
 	/**
 	 * Lists the names of all companies that are monitored
 	 * 
-	 * @return
+	 * @return - An array of {@link CompanyDTO} objects which contain the
+	 *         company name, symbol and created date
+	 * 
+	 *         Internal server error if there was an exception while retrieving
+	 *         the data
 	 */
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CompanyDTO>> listAllCompanies() {
@@ -93,10 +107,15 @@ public class CompanyRESTController {
 	}
 
 	/**
-	 * Returns the company information
+	 * Returns the a particular company information
 	 * 
 	 * @param companySymbol
-	 * @return
+	 *            - The stock symbol of the company. Example - Microsoft - MSFT
+	 * @return - A {@link CompanyDTO} object with its name, symbol and creation
+	 *         time
+	 * 
+	 *         Internal server error if there was an exception while retrieving
+	 *         the data
 	 */
 	@GetMapping(value = "/{company-symbol}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CompanyDTO> getCompanyInfo(@PathVariable("company-symbol") String companySymbol) {

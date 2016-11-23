@@ -1,5 +1,12 @@
 package com.logicmonitor.spm.exception;
 
+/**
+ * Exception to indicate the JSON returned from the Stock Information provider
+ * is invalid
+ * 
+ * @author Supraj
+ *
+ */
 public class InvalidJsonException extends Exception {
 	private static final long serialVersionUID = -8331154760495655486L;
 

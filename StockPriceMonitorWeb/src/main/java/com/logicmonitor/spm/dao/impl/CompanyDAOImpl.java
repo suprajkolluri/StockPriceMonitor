@@ -16,6 +16,12 @@ import com.logicmonitor.spm.dao.CompanyDAO;
 import com.logicmonitor.spm.dto.CompanyDTO;
 import com.logicmonitor.spm.exception.StorageException;
 
+/**
+ * DAO Implementation to perform CRUD operations on {@link CompanyDTO} entity
+ * 
+ * @author Supraj
+ *
+ */
 @Repository
 @PropertySource("classpath:company-queries.properties")
 public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDAO {
@@ -23,18 +29,24 @@ public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDA
 	@Autowired
 	Environment env;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void addCompany(CompanyDTO company) throws StorageException {
 
 		try {
-			saveModel(company);
+			saveDTO(company);
 		} catch (HibernateException e) {
 			throw new StorageException(e);
 		}
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void deleteCompany(String companySymbol) throws StorageException {
@@ -49,6 +61,9 @@ public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDA
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
@@ -63,6 +78,9 @@ public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDA
 		return companyList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public CompanyDTO getCompanyInfo(String companySymbol) throws StorageException {

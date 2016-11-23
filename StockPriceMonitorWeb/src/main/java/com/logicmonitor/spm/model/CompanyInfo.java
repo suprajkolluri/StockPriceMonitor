@@ -1,8 +1,25 @@
 package com.logicmonitor.spm.model;
 
+/**
+ * Model Class to hold the company information
+ * 
+ * @author Supraj
+ *
+ */
 public class CompanyInfo {
+	/**
+	 * The name of the company
+	 */
 	private String name;
+
+	/**
+	 * The symbol of the company
+	 */
 	private String symbol;
+
+	/**
+	 * The latest updated stock price of a company
+	 */
 	private Double last_updated_price;
 
 	public String getName() {

@@ -5,9 +5,22 @@ import java.util.List;
 
 import com.logicmonitor.spm.dto.StockDetailsDTO;
 
+/**
+ * Model class to hold a companies stock history information
+ * 
+ * @author Supraj
+ *
+ */
 public class StockHistory {
 
+	/**
+	 * The symbol of the company
+	 */
 	private String symbol;
+
+	/**
+	 * The monitored entries of a stock
+	 */
 	private List<StockDetailsDTO> stockHistory = new ArrayList<>();
 
 	public StockHistory() {

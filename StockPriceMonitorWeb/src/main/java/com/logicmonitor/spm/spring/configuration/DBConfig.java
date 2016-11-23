@@ -17,6 +17,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.logicmonitor.spm.util.jasypt.PasswordDecryptUtil;
 
+/**
+ * Configuration class to set up the data source and hibernate properties based
+ * on the environment
+ * 
+ * @author Supraj
+ *
+ */
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:database-${env}.properties")
@@ -28,6 +35,11 @@ public class DBConfig {
 	@Autowired
 	PasswordDecryptUtil decryptor;
 
+	/**
+	 * Inject the datasource
+	 * 
+	 * @return The datasource with the database information
+	 */
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		String url = "jdbc:" + env.getProperty("db") + "://" + env.getProperty("host") + ":" + env.getProperty("port")
@@ -42,6 +54,14 @@ public class DBConfig {
 		return dataSource;
 	}
 
+	/**
+	 * Inject the Hibernate session factory
+	 * 
+	 * @param dataSource
+	 *            The datasource with the database information
+	 * @return The Hibernate session factory which can be used to perform CRUD
+	 *         operations on the database
+	 */
 	@Autowired
 	@Bean(name = "sessionFactory")
 	public SessionFactory getSessionFactory(DataSource dataSource) {
@@ -55,6 +75,11 @@ public class DBConfig {
 		return sessionBuilder.buildSessionFactory();
 	}
 
+	/**
+	 * Sets Hibernate properties
+	 * 
+	 * @return Properties object with hibernate properties
+	 */
 	private Properties getHibernateProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.show_sql", "true");
@@ -63,6 +88,13 @@ public class DBConfig {
 		return properties;
 	}
 
+	/**
+	 * Inject the Hibernate Transaction manager to allow transaction based
+	 * operations
+	 * 
+	 * @param sessionFactory
+	 * @return The hibernate transaction manager
+	 */
 	@Autowired
 	@Bean(name = "transactionManager")
 	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {

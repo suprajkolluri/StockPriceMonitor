@@ -13,6 +13,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.logicmonitor.spm.service.URIGeneratorService;
 
+/**
+ * Service Implementation to generate the Stock Provider URI
+ * 
+ * @author Supraj
+ *
+ */
 @Service
 @PropertySource("classpath:stockprovider.properties")
 public class URIGeneratorServiceImpl implements URIGeneratorService {
@@ -21,18 +27,17 @@ public class URIGeneratorServiceImpl implements URIGeneratorService {
 	private Environment env;
 
 	/**
-	 * Get stock REST provider
-	 * 
-	 * @return {URI}
+	 * {@inheritDoc}
 	 */
 	@Override
 	public URI getStockRestURI(String symbol) {
-
+		// Add query parameters to the URL
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("q", String.format("%s %s", env.getProperty("stockprovider.query"), "(\"" + symbol + "\")"));
 		map.add("format", env.getProperty("stockprovider.format"));
 		map.add("env", env.getProperty("stockprovider.env"));
 
+		// Build the URI
 		UriComponents uriComponents = UriComponentsBuilder.newInstance().scheme(env.getProperty("stockprovider.scheme"))
 				.host(env.getProperty("stockprovider.host")).path(env.getProperty("stockprovider.path"))
 				.queryParams(map).build();
