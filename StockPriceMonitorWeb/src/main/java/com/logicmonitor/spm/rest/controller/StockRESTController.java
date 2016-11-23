@@ -2,6 +2,7 @@ package com.logicmonitor.spm.rest.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +31,8 @@ public class StockRESTController {
 	@Autowired
 	StockDetailsService detailsService;
 
+	final static Logger logger = Logger.getLogger(StockRESTController.class);
+
 	/**
 	 * Lists the names of all companies that are monitored with their last
 	 * updated stock price
@@ -47,6 +50,7 @@ public class StockRESTController {
 		try {
 			companyList = detailsService.getAllCompanies();
 		} catch (StorageException e) {
+			logger.error(e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(companyList, HttpStatus.OK);
@@ -72,6 +76,7 @@ public class StockRESTController {
 			List<StockDetailsDTO> stockHistory = detailsService.getCompanyHistory(companySymbol);
 			companyHistory = new StockHistory(companySymbol, stockHistory);
 		} catch (StorageException e) {
+			logger.error(e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(companyHistory, HttpStatus.OK);

@@ -4,7 +4,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.stereotype.Component;
 
 /**
- * Utility to decrpy passwords using Jasypt
+ * Utility to decrpyt passwords using Jasypt
  * 
  * @author Supraj
  *

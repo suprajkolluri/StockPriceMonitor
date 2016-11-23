@@ -2,6 +2,7 @@ package com.logicmonitor.spm.rest.controller;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,8 @@ import com.logicmonitor.spm.service.CompanyService;
 @RequestMapping("/rest/companies")
 public class CompanyRESTController {
 
+	final static Logger logger = Logger.getLogger(CompanyRESTController.class);
+
 	@Autowired
 	CompanyService companyService;
 
@@ -53,8 +56,10 @@ public class CompanyRESTController {
 		try {
 			companyService.addCompany(companySymbol);
 		} catch (InvalidSymbolException e) {
+			logger.error(e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		} catch (StorageException | InvalidJsonException e) {
+			logger.error(e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
@@ -79,6 +84,7 @@ public class CompanyRESTController {
 		try {
 			companyService.deleteCompany(companySymbol);
 		} catch (StorageException e) {
+			logger.error(e);
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>("Deleted the company:" + companySymbol + "successfully", HttpStatus.OK);
@@ -100,6 +106,7 @@ public class CompanyRESTController {
 		try {
 			companyList = companyService.getCompanies();
 		} catch (StorageException e) {
+			logger.error(e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(companyList, HttpStatus.OK);
@@ -123,6 +130,7 @@ public class CompanyRESTController {
 		try {
 			company = companyService.getCompanyInfo(companySymbol);
 		} catch (StorageException e) {
+			logger.error(e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(company, HttpStatus.OK);
