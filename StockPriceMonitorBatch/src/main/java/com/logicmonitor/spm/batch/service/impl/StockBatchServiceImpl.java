@@ -46,7 +46,7 @@ public class StockBatchServiceImpl implements StockBatchService {
 	 * 4 PM, since the stock market is open only during these timings
 	 * {@inheritDoc}
 	 */
-	@Scheduled(cron = "0 0/1 9-16 * * 1-5")
+	@Scheduled(cron = "0 0/5 9-16 * * 1-5")
 	@Override
 	public void addStockEntries() {
 
