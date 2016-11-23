@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +17,11 @@ import com.logicmonitor.spm.dto.CompanyDTO;
 import com.logicmonitor.spm.exception.StorageException;
 
 @Repository
+@PropertySource("classpath:company-queries.properties")
 public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDAO {
+
+	@Autowired
+	Environment env;
 
 	@Override
 	@Transactional
@@ -31,10 +38,10 @@ public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDA
 	@Override
 	@Transactional
 	public void deleteCompany(String companySymbol) throws StorageException {
-		Query query = sessionFactory.getCurrentSession().createQuery("delete from CompanyDTO where symbol =:symbol");
-		query.setParameter("symbol", companySymbol);
 
 		try {
+			Query query = sessionFactory.getCurrentSession().createQuery(env.getProperty("delete-company"));
+			query.setParameter("symbol", companySymbol);
 			query.executeUpdate();
 		} catch (HibernateException e) {
 			throw new StorageException(e);
@@ -46,9 +53,9 @@ public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDA
 	@Override
 	@Transactional
 	public List<CompanyDTO> getCompanies() throws StorageException {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CompanyDTO");
 		List<CompanyDTO> companyList = new ArrayList<>();
 		try {
+			Query query = sessionFactory.getCurrentSession().createQuery(env.getProperty("get-companies"));
 			companyList = query.getResultList();
 		} catch (HibernateException e) {
 			throw new StorageException(e);
@@ -59,10 +66,10 @@ public class CompanyDAOImpl extends BaseDAOImpl<CompanyDTO> implements CompanyDA
 	@Override
 	@Transactional
 	public CompanyDTO getCompanyInfo(String companySymbol) throws StorageException {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CompanyDTO where symbol =:symbol ");
-		query.setParameter("symbol", companySymbol);
 		CompanyDTO company = null;
 		try {
+			Query query = sessionFactory.getCurrentSession().createQuery(env.getProperty("get-company"));
+			query.setParameter("symbol", companySymbol);
 			company = (CompanyDTO) query.getSingleResult();
 		} catch (HibernateException e) {
 			throw new StorageException(e);

@@ -13,9 +13,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "Stock_History")
 @IdClass(StockDetailsPK.class)
+@JsonIgnoreProperties("company")
 public class StockDetailsDTO {
 
 	@Id
@@ -25,6 +29,7 @@ public class StockDetailsDTO {
 
 	@Id
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = "yyyy-MM-dd mm:ss")
 	private Date time;
 
 	@Column(name = "stock_price", nullable = false)
