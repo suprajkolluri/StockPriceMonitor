@@ -1,0 +1,12 @@
+com.logicmonitor.spm.dao
+com.logicmonitor.spm.dao.impl
+com.logicmonitor.spm.dto
+com.logicmonitor.spm.exception
+com.logicmonitor.spm.model
+com.logicmonitor.spm.rest.controller
+com.logicmonitor.spm.service
+com.logicmonitor.spm.service.impl
+com.logicmonitor.spm.service.impl.test
+com.logicmonitor.spm.spring.configuration
+com.logicmonitor.spm.spring.configuration.initialization
+com.logicmonitor.spm.util.jasypt
