@@ -2,17 +2,20 @@ package com.logicmonitor.spm.spring.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
+ * Default application configuration class that will load all the spring related
+ * configurations and inject all the dependencies.
  * 
- * This is the default application configuration class that will load all the
- * spring related configurations and inject all the dependencies.
- *
+ * @author Supraj
+ * 
  */
+@ComponentScan({ "com.logicmonitor.spm.*" })
 @Configuration
 @EnableWebMvc
-@ComponentScan({ "com.logicmonitor.spm.*" })
+@Import({ DBConfig.class })
 public class ApplicationConfig {
 
 }

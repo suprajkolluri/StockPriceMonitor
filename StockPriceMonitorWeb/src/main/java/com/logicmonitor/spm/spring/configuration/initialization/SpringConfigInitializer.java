@@ -4,6 +4,13 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import com.logicmonitor.spm.spring.configuration.ApplicationConfig;
 
+/**
+ * Default Spring configuration class which sets the root, servlet configuration
+ * classes and servlet mappings.
+ * 
+ * @author Supraj
+ * 
+ */
 public class SpringConfigInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
