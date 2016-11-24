@@ -24,6 +24,7 @@
 		<mockito.version>1.10.19</mockito.version>
 		<powermock.version>1.6.6</powermock.version>
 		<junit.version>4.11</junit.version>
+		<tomcat.maven.version>2.2</tomcat.maven.version>
 	</properties>
 
 
@@ -155,7 +156,6 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- Mockito -->
@@ -192,6 +192,16 @@
 	<build>
 		<finalName>StockPriceMonitor</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat.maven.version}</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>
+					<server>TomcatServer</server>
+					<path>/StockPriceMonitor</path>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

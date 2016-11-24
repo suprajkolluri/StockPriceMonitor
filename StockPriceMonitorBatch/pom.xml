@@ -106,6 +106,21 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.logicmonitor.spm.batch.configuration.Application</mainClass>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
